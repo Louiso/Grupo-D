@@ -15,6 +15,7 @@ export default class Registro extends React.Component{
         password:password,
         email:email,
       });
+      // Accounts.sendVerificationEmail(Meteor.userId(),email);
       FlowRouter.go(`/${username}`);
     }else{
       this.props.error='Que le pasa boludo';
@@ -53,6 +54,7 @@ export default class Registro extends React.Component{
                    <a href="/Login" className='right'>Login</a>
                  </div>
               </div>
+
           </form>
       </div>
     );

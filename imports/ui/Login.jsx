@@ -4,6 +4,9 @@ import {Meteor} from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 
 export default class Login extends React.Component {
+    recuperarContraseña(){
+      FlowRouter.go('/RecuperarContraseña');
+    }
     handleSubmit(event) {
         event.preventDefault();
         const username = ReactDOM.findDOMNode(this.refs.username).value.trim();
@@ -47,7 +50,7 @@ export default class Login extends React.Component {
                          </button>
                       </div>
                        <div className="col s6">
-                         <a className='linkRecuperarContraseña right'>recuperar contraseña</a>
+                         <a className='linkRecuperarContraseña right' onClick={this.recuperarContraseña.bind(this)}>recuperar contraseña</a>
                        </div>
                     </div>
                 </form>

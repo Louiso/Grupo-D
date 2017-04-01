@@ -20,3 +20,5 @@ kadira:flow-router
 meteortoys:allthings
 accounts-base
 accounts-password
+insecure
+autopublish
