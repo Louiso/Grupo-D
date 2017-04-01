@@ -1,29 +1,25 @@
 import React from 'react';
 
-import Nav from '../../imports/ui/Nav.jsx';
-
-export const MainLayout = ({content})=>{
-    return(
-      <div className="demo-layout-transparent mdl-layout mdl-js-layout">
-        <header className="mdl-layout__header mdl-layout__header--transparent">
-          <div className="mdl-layout__header-row">
-            <span className="mdl-layout-title">Title</span>
-            <div className="mdl-layout-spacer"></div>
-            <Nav/>
-          </div>
-        </header>
-        <div className="mdl-layout__drawer">
-          <span className="mdl-layout-title">Title</span>
-          <nav className="mdl-navigation">
-            <a className="mdl-navigation__link" href="">Link</a>
-            <a className="mdl-navigation__link" href="">Link</a>
-            <a className="mdl-navigation__link" href="">Link</a>
-            <a className="mdl-navigation__link" href="">Link</a>
-          </nav>
+export const MainLayout = ({content}) => {
+    return (
+        <div>
+            <nav>
+                <div className="nav-wrapper">
+                    <a href="#" className="brand-logo">Logo</a>
+                    <ul id="nav-mobile" className="right hide-on-med-and-down">
+                        <li>
+                            <a href="/Login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/Registro">Registrate</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div>
+              {content}
+            </div>
         </div>
-        <main className="mdl-layout__content">
-          {content}
-        </main>
-      </div>
+
     );
 }

@@ -5,6 +5,7 @@ import { MainLayout } from './layouts/MainLayout.jsx';
 import Login from '../imports/ui/Login.jsx';
 import Home from '../imports/ui/Home.jsx';
 import Registro from '../imports/ui/Registro.jsx';
+import { layoutCuenta } from './layouts/layoutCuenta.jsx';
 
 FlowRouter.route('/',{
   action(){
@@ -13,6 +14,7 @@ FlowRouter.route('/',{
     });
   }
 });
+
 FlowRouter.route('/Login',{
   action(){
     mount(MainLayout,{
@@ -24,6 +26,13 @@ FlowRouter.route('/Registro',{
   action(){
     mount(MainLayout,{
       content:(<Registro/>)
+    });
+  }
+});
+FlowRouter.route('/:id',{
+  action(){
+    mount(layoutCuenta,{
+      content:(<Home/>)
     });
   }
 });

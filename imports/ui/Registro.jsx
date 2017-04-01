@@ -1,43 +1,68 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { Meteor } from 'meteor/meteor';
+import ReactDOM from 'react-dom';
+import { Accounts } from 'meteor/accounts-base';
 
-export default class Login extends React.Component{
+export default class Registro extends React.Component{
+  handleSubmit(event){
+    event.preventDefault();
+    const username= ReactDOM.findDOMNode(this.refs.username).value.trim();
+    const password= ReactDOM.findDOMNode(this.refs.password).value.trim();
+    const email= ReactDOM.findDOMNode(this.refs.email).value.trim();
+    if(username && password && email){
+      Accounts.createUser({
+        username:username,
+        password:password,
+        email:email,
+      });
+      FlowRouter.go(`/${username}`);
+    }else{
+      this.props.error='Que le pasa boludo';
+    }
+  }
   render(){
     return(
-      <form className='white'>
-
-        <div className='mdl-grid'>
-          <div className="mdl-cell mdl-cell--12-col">
-            <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" ref='username' type="text" id="username"/>
-              <label className="mdl-textfield__label" htmlFor="username">Username</label>
-            </div>
-          </div>
-        </div>
-        <div className='mdl-grid'>
-          <div className="mdl-cell mdl-cell--12-col">
-            <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" ref='username' type="text" id="password"/>
-              <label className="mdl-textfield__label" htmlFor="password">Password</label>
-            </div>
-          </div>
-        </div>
-        <div className='mdl-grid'>
-          <div className="mdl-cell mdl-cell--12-col">
-            <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" ref='email' type="text" id="email"/>
-              <label className="mdl-textfield__label" htmlFor="email">Email</label>
-            </div>
-          </div>
-        </div>
-        <div className='mdl-grid'>
-
-          <div className="mdl-cell mdl-cell--12-col">
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-              Registrar
-            </button>
-          </div>
-        </div>
-      </form>
+      <div className="row">
+          <form className="col s12" onSubmit={this.handleSubmit.bind(this)}>
+              <div className="row">
+                  <div className="input-field col s12">
+                      <input placeholder="Username" ref='username' id="username" type="text" className="validate"/>
+                      <label htmlFor="username">First Name</label>
+                  </div>
+              </div>
+              <div className="row">
+                  <div className="input-field col s12">
+                      <input id="password" ref='password' type="password" className="validate"/>
+                      <label htmlFor="password">Password</label>
+                  </div>
+              </div>
+              <div className="row">
+                  <div className="input-field col s12">
+                      <input id="email" ref='email' type="email" className="validate"/>
+                      <label htmlFor="email">Email</label>
+                  </div>
+              </div>
+              {this.props.error}
+              <div className="row">
+                <div className="col s6">
+                  <button className="btn waves-effect waves-light" type="submit">Registro
+                     <i className="material-icons right">send</i>
+                   </button>
+                </div>
+                 <div className="col s6">
+                   <a href="/Login" className='right'>Login</a>
+                 </div>
+              </div>
+          </form>
+      </div>
     );
   }
+}
+
+Registro.defaultProps={
+  error:'',
+}
+
+Registro.propTypes={
+  error:PropTypes.string,
 }

@@ -1,35 +1,65 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {Accounts} from 'meteor/accounts-base';
+import {Meteor} from 'meteor/meteor';
+import ReactDOM from 'react-dom';
 
-export default class Login extends React.Component{
+export default class Login extends React.Component {
+    handleSubmit(event) {
+        event.preventDefault();
+        const username = ReactDOM.findDOMNode(this.refs.username).value.trim();
+        const password = ReactDOM.findDOMNode(this.refs.password).value.trim();
+        if (username != '' && password != '') {
+            Meteor.loginWithPassword(username, password);
+            FlowRouter.go('/');
+        } else {
+            this.props.mensaje = 'Es Obligatorio llenar todos los campos';
+        }
+    }
+    changeRegister() {
+        FlowRouter.go('/Registro');
+    }
+    render() {
+        return (
+            <div className="row">
+                <form className="col s12">
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <input placeholder="Username" ref='username' id="username" type="text" className="validate"/>
+                            <label htmlFor="username">First Name</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <input id="password" ref='password' type="password" className="validate"/>
+                              <label htmlFor="password">Password</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <input id="email" ref='email' type="email" className="validate"/>
+                            <label htmlFor="email">Email</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                      <div className="col s6">
+                        <button className="btn waves-effect waves-light" type="submit">Login
+                           <i className="material-icons right">send</i>
+                         </button>
+                      </div>
+                       <div className="col s6">
+                         <a className='linkRecuperarContraseña right'>recuperar contraseña</a>
+                       </div>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+}
 
-  render(){
-    return(
-    <form className='white'>
-      <div className='mdl-grid'>
-        <div className="mdl-cell mdl-cell--12-col">
-          <div className="mdl-textfield mdl-js-textfield">
-            <input className="mdl-textfield__input" ref='username' type="text" id="username"/>
-            <label className="mdl-textfield__label" htmlFor="username">Username</label>
-          </div>
-        </div>
-      </div>
-      <div className='mdl-grid'>
-        <div className="mdl-cell mdl-cell--12-col">
-          <div className="mdl-textfield mdl-js-textfield">
-            <input className="mdl-textfield__input" ref='username' type="text" id="password"/>
-            <label className="mdl-textfield__label" htmlFor="password">Password</label>
-          </div>
-        </div>
-      </div>
-      <div className='mdl-grid'>
+Login.defaultProps = {
+    mensaje: ''
+}
 
-        <div className="mdl-cell mdl-cell--12-col">
-          <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Login
-          </button>
-        </div>
-      </div>
-    </form>
-    );
-  }
+Login.propTypes = {
+    mensaje: PropTypes.string
 }
