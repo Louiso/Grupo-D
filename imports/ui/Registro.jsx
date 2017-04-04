@@ -4,6 +4,12 @@ import ReactDOM from 'react-dom';
 import { Accounts } from 'meteor/accounts-base';
 
 export default class Registro extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      error:'',
+    }
+  }
   handleSubmit(event){
     event.preventDefault();
     const username= ReactDOM.findDOMNode(this.refs.username).value.trim();
@@ -18,7 +24,9 @@ export default class Registro extends React.Component{
       // Accounts.sendVerificationEmail(Meteor.userId(),email);
       FlowRouter.go(`/${username}`);
     }else{
-      this.props.error='Que le pasa boludo';
+      this.setState({
+        error:'Que le pasa boludo'
+      });
     }
   }
   render(){
@@ -43,7 +51,7 @@ export default class Registro extends React.Component{
                       <label htmlFor="email">Email</label>
                   </div>
               </div>
-              {this.props.error}
+              {this.state.error}
               <div className="row">
                 <div className="col s6">
                   <button className="btn waves-effect waves-light" type="submit">Registro
@@ -59,12 +67,4 @@ export default class Registro extends React.Component{
       </div>
     );
   }
-}
-
-Registro.defaultProps={
-  error:'',
-}
-
-Registro.propTypes={
-  error:PropTypes.string,
 }

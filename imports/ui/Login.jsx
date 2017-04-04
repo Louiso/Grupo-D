@@ -3,7 +3,14 @@ import {Accounts} from 'meteor/accounts-base';
 import {Meteor} from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 
+
 export default class Login extends React.Component {
+    constructor(props){
+      super(props);
+      this.state={
+        mensaje:'',
+      }
+    }
     recuperarContraseña(){
       FlowRouter.go('/RecuperarContraseña');
     }
@@ -13,9 +20,11 @@ export default class Login extends React.Component {
         const password = ReactDOM.findDOMNode(this.refs.password).value.trim();
         if (username != '' && password != '') {
             Meteor.loginWithPassword(username, password);
-            FlowRouter.go('/');
+            FlowRouter.go(`/${username}`);
         } else {
-            this.props.mensaje = 'Es Obligatorio llenar todos los campos';
+            this.setState({
+              mensaje:'No seas mamon!!!',
+            });
         }
     }
     changeRegister() {
@@ -24,11 +33,11 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="row">
-                <form className="col s12">
+                <form className="col s12" onSubmit={this.handleSubmit.bind(this)}>
                     <div className="row">
                         <div className="input-field col s12">
                             <input placeholder="Username" ref='username' id="username" type="text" className="validate"/>
-                            <label htmlFor="username">First Name</label>
+                            <label htmlFor="username">Username</label>
                         </div>
                     </div>
                     <div className="row">
@@ -37,11 +46,10 @@ export default class Login extends React.Component {
                               <label htmlFor="password">Password</label>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input id="email" ref='email' type="email" className="validate"/>
-                            <label htmlFor="email">Email</label>
-                        </div>
+                    <div className='row'>
+                      <div className='col s12'>
+                        <span>{this.state.mensaje}</span>
+                      </div>
                     </div>
                     <div className="row">
                       <div className="col s6">
@@ -57,12 +65,4 @@ export default class Login extends React.Component {
             </div>
         );
     }
-}
-
-Login.defaultProps = {
-    mensaje: ''
-}
-
-Login.propTypes = {
-    mensaje: PropTypes.string
 }
